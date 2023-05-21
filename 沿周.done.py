@@ -182,3 +182,54 @@ def get_mouse_pos(event, x, y, flags, param):
                             thickness)
                 cv2.putText(img_draw, text3, (x1, y1), font, font_scale, color,
                             thickness)
+             # 写字，中间条形下部,分成三部分
+            # 左
+            if lcx + text_size3[0] > mx >= lcx:
+                cv2.putText(img_draw, text0, (x1, y2 - text_size2[1] + trim_upup), font, font_scale, (0, 0, 255),
+                            thickness)
+                cv2.putText(img_draw, text1, (x1 + text_size0[0], y2 - text_size2[1] + trim_upup), font, font_scale,
+                            color,
+                            thickness)
+                cv2.putText(img_draw, text2, (x1 + text_size3[0], y2 + trim_up), font, font_scale, color, thickness)
+                cv2.putText(img_draw, text3, (x1, y2 + trim_up), font, font_scale, color, thickness)
+            # 中间
+            if lcx + text_size3[0] <= mx <= rcx - text_size2[0]:
+                cv2.putText(img_draw, text0, (x1 - text_size0[0], y2 - text_size2[1] + trim_upup), font, font_scale,
+                            color,
+                            thickness)
+                cv2.putText(img_draw, text1, (x1, y2 - text_size2[1] + trim_upup), font, font_scale, color, thickness)
+                cv2.putText(img_draw, text2, (x1, y2 + trim_up), font, font_scale, color, thickness)
+                cv2.putText(img_draw, text3, (x1 - text_size3[0], y2 + trim_up), font, font_scale, color, thickness)
+            # 右侧
+            if rcx - text_size2[0] < mx <= rcx:
+                cv2.putText(img_draw, text0, (x1 - text_size2[0] - text_size0[0], y2 - text_size2[1] + trim_upup), font,
+                            font_scale,
+                            color,
+                            thickness)
+                cv2.putText(img_draw, text1, (x1 - text_size2[0], y2 - text_size2[1] + trim_upup), font, font_scale,
+                            color,
+                            thickness)
+                cv2.putText(img_draw, text2, (x1 - text_size2[0], y2 + trim_up), font, font_scale, color,
+                            thickness)
+                cv2.putText(img_draw, text3, (x1 - text_size2[0] - text_size3[0], y2 + trim_up), font, font_scale,
+                            color,
+                            thickness)
+
+        # 显示更新后的图像
+        cv2.imshow("image", img_draw)
+        # img1 = np.array(img_pil)
+        # cv2.imshow("image", img1)
+
+
+# 初始化显示窗口
+cv2.namedWindow("image")
+
+# 绑定鼠标事件处理函数
+cv2.setMouseCallback("image", get_mouse_pos)
+# 在窗口中显示图片
+cv2.imshow("image", img)
+
+cv2.waitKey(0)
+
+# 释放窗口资源
+cv2.destroyAllWindows()
